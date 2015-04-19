@@ -101,6 +101,21 @@ void parse(std::string &s)
     }
 }
 
+void pop(char** in_arr, char* in_cstr, int len)
+{
+    char* token = strtok(in_cstr, " ");
+    for(int i = 0; i < len; i++)
+    {
+        int length = strlen(token) + 1;
+        //cout << length << endl;
+        in_arr[i] = new char[length];
+        strcpy(in_arr[i], token);
+        cout << in_arr[i] << endl;
+        //cout << token << endl;
+        token = strtok(NULL, " ");
+    }
+}
+
 int main (int argc, char **argv)
 {
 	string stop;
@@ -131,18 +146,8 @@ int main (int argc, char **argv)
         	tok = strtok(NULL, " ");
         }
         //cout << cop << endl;
-        char** input = new char*[cop+1];
-        char* token = strtok(sec, " ");
-        for(int i = 0; i <= (cop-1); i++)
-        {
-        	int length = strlen(token) + 1;
-        	//cout << length << endl;
-            input[i] = new char[length];
-            strcpy(input[i], token);
-            cout << input[i] << endl;
-            //cout << token << endl;
-            token = strtok(NULL, " ");
-        }
+        char** input = new char*[cop];
+        pop(input, sec, cop);
         int pid = fork();
         if(pid == -1)
         {
