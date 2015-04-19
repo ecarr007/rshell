@@ -6,6 +6,8 @@
 #include <sys/wait.h>
 #include <vector>
 #include <string.h>
+#include <cstring>
+#include <sys/param.h>
 
 using namespace std;
 void printcmd()
@@ -60,10 +62,10 @@ bool lookForExit(std::string s)
     }
 }
 
-void parse(std::string s)
+void parse(std::string &s)
 {
     int pos = 0;
-    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
+    for(std::string::iterator iter = s.begin(); iter < s.end(); iter++, pos++)
     {
         int cont = s.find(";", pos);
         if(cont != -1)
@@ -75,27 +77,27 @@ void parse(std::string s)
         }
     }
     pos = 0;
-    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
+    for(std::string::iterator iter = s.begin(); iter < s.end(); iter++, pos++)
     {
         int s_and = s.find("&&", pos);
         if(s_and != -1)
         {
         	s.insert(s_and, " ");
-        	s.insert((s_and + 1), " ");
-        	iter += (s_and + 1);
-        	pos = s_and + 1;
+        	s.insert((s_and + 2), " ");
+        	iter += (s_and + 2);
+        	pos = s_and + 2;
         }
     }
     pos = 0;
-    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
+    for(std::string::iterator iter = s.begin(); iter < s.end(); iter++, pos++)
     {
         int s_or = s.find("||", pos);
         if(s_or != -1)
         {
         	s.insert(s_or, " ");
-        	s.insert((s_or + 1), " ");
-        	iter += (s_or + 1);
-        	pos = s_or + 1;
+        	s.insert((s_or + 2), " ");
+        	iter += (s_or + 2);
+        	pos = s_or + 2;
         }
     }
 }
@@ -112,10 +114,11 @@ int main (int argc, char **argv)
         string temp = lookForComm(stop);
         exyn = lookForExit(temp);
         parse(temp);
+        cout << "check" << endl;
         char* str = new char[temp.size()];
         strcpy(str, temp.c_str());
         char* tok = strtok(str, " ");
-        while(tok != NULL)
+        while(tok != 0)
         {
         	cout << tok << endl;
         	tok = strtok(NULL, " ");
