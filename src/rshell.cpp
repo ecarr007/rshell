@@ -53,7 +53,6 @@ bool lookForExit(std::string s)
     if((pos = s.find(ex)) != std::string::npos)
     {
     	s = s.substr(0, pos);
-    	std::cout << s << std::endl;
     	return true;
     }
     else
@@ -71,9 +70,9 @@ void parse(std::string &s)
         if(cont != -1)
         {
         	s.insert(cont, " ");
-        	s.insert((cont + 1), " ");
-        	iter += (cont + 1);
-        	pos = cont + 1;
+        	s.insert((s.find(";", pos))+1, " ");
+        	iter = s.begin() + s.find(";")+1;
+        	pos = s.find(";", pos)+1;
         }
     }
     pos = 0;
@@ -83,9 +82,9 @@ void parse(std::string &s)
         if(s_and != -1)
         {
         	s.insert(s_and, " ");
-        	s.insert((s_and + 2), " ");
-        	iter += (s_and + 2);
-        	pos = s_and + 2;
+        	s.insert(s.find("&&", pos)+2, " ");
+        	iter = s.begin() + s.find("&&")+2;
+        	pos = s.find("&&", pos)+2;
         }
     }
     pos = 0;
@@ -95,9 +94,9 @@ void parse(std::string &s)
         if(s_or != -1)
         {
         	s.insert(s_or, " ");
-        	s.insert((s_or + 2), " ");
-        	iter += (s_or + 2);
-        	pos = s_or + 2;
+        	s.insert(s.find("||", pos)+2, " ");
+        	iter = s.begin() + s.find("||")+2;
+        	pos = s.find("||", pos)+2;
         }
     }
 }
@@ -114,7 +113,6 @@ int main (int argc, char **argv)
         string temp = lookForComm(stop);
         exyn = lookForExit(temp);
         parse(temp);
-        cout << "check" << endl;
         char* str = new char[temp.size()];
         strcpy(str, temp.c_str());
         char* tok = strtok(str, " ");
