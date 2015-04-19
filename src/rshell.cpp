@@ -46,29 +46,6 @@ std::string lookForComm(string s)
    }
 }
 
-bool lookForExit(char** arr, int arr_s)
-{
-    std::string ex = "exit";
-    //int pos = 0;
-    bool ret;
-    int ch = 0;
-    for(int pos; pos < arr_s; pos++)
-    {
-    	if(arr[pos] == ex)
-        {
-    	    //s = s.substr(0, pos);
-    	    //return true;
-    	    ch++;
-    	    strcpy(arr[pos], "\0");
-    	    break;
-        }
-        else
-        {
-    	    return false;
-        }
-    }
-}
-
 void parse(std::string &s)
 {
     int pos = 0;
