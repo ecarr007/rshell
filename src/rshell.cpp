@@ -105,6 +105,7 @@ int main (int argc, char **argv)
 {
 	string stop;
 	bool exyn;
+	//char** input;
 	do
 	{
         printcmd();
@@ -113,13 +114,34 @@ int main (int argc, char **argv)
         string temp = lookForComm(stop);
         exyn = lookForExit(temp);
         parse(temp);
-        char* str = new char[temp.size()];
+        size_t len = temp.size();
+        cout << len << endl;
+        char* str = new char[len];
         strcpy(str, temp.c_str());
+        char* sec = new char[len];
+        strcpy(sec, temp.c_str());
         char* tok = strtok(str, " ");
+        int cop = 0;
         while(tok != 0)
         {
-        	cout << tok << endl;
+        	//cout << tok << endl;
+            //strcpy(input[cop], tok);
+            //std::cout << input[cop] << std::endl;
+            cop++;
         	tok = strtok(NULL, " ");
+        }
+        //cout << cop << endl;
+        char** input = new char*[cop+1];
+        char* token = strtok(sec, " ");
+        for(int i = 0; i <= (cop-1); i++)
+        {
+        	int length = strlen(token) + 1;
+        	//cout << length << endl;
+            input[i] = new char[length];
+            strcpy(input[i], token);
+            cout << input[i] << endl;
+            //cout << token << endl;
+            token = strtok(NULL, " ");
         }
         int pid = fork();
         if(pid == -1)
