@@ -46,18 +46,26 @@ std::string lookForComm(string s)
    }
 }
 
-bool lookForExit(std::string s)
+bool lookForExit(char** arr, int arr_s)
 {
     std::string ex = "exit";
-    int pos = 0;
-    if((pos = s.find(ex)) != std::string::npos)
+    //int pos = 0;
+    bool ret;
+    int ch = 0;
+    for(int pos; pos < arr_s; pos++)
     {
-    	s = s.substr(0, pos);
-    	return true;
-    }
-    else
-    {
-    	return false;
+    	if(arr[pos] == ex)
+        {
+    	    //s = s.substr(0, pos);
+    	    //return true;
+    	    ch++;
+    	    strcpy(arr[pos], "\0");
+    	    break;
+        }
+        else
+        {
+    	    return false;
+        }
     }
 }
 
@@ -101,11 +109,17 @@ void parse(std::string &s)
     }
 }
 
-void pop(char** in_arr, char* in_cstr, int len)
+bool pop(char** in_arr, char* in_cstr, int len)
 {
     char* token = strtok(in_cstr, " ");
+    int ch = 0;
     for(int i = 0; i < len; i++)
     {
+    	if(strcmp(token, "exit") == 0)
+        {
+        	ch++;
+        	break;
+        }
         int length = strlen(token) + 1;
         //cout << length << endl;
         in_arr[i] = new char[length];
@@ -113,6 +127,14 @@ void pop(char** in_arr, char* in_cstr, int len)
         cout << in_arr[i] << endl;
         //cout << token << endl;
         token = strtok(NULL, " ");
+    }
+    if(ch > 0)
+    {
+    	return true;
+    }
+    else 
+    {
+    	return false;
     }
 }
 
@@ -125,12 +147,10 @@ int main (int argc, char **argv)
 	{
         printcmd();
         getline(cin, stop);
-        
         string temp = lookForComm(stop);
-        exyn = lookForExit(temp);
+        //exyn = lookForExit(temp);
         parse(temp);
         size_t len = temp.size();
-        cout << len << endl;
         char* str = new char[len];
         strcpy(str, temp.c_str());
         char* sec = new char[len];
@@ -147,7 +167,7 @@ int main (int argc, char **argv)
         }
         //cout << cop << endl;
         char** input = new char*[cop];
-        pop(input, sec, cop);
+        exyn = pop(input, sec, cop);
         int pid = fork();
         if(pid == -1)
         {
