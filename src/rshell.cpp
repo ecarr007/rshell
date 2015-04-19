@@ -5,7 +5,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <vector>
-#include <string>
+#include <string.h>
 
 using namespace std;
 void printcmd()
@@ -62,7 +62,8 @@ bool lookForExit(std::string s)
 
 void parse(std::string s)
 {
-    for(std::string::iterator iter = s.begin(), int pos = 0; iter != s.end(); iter++, pos++)
+    int pos = 0;
+    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
     {
         int cont = s.find(";", pos);
         if(cont != -1)
@@ -73,7 +74,8 @@ void parse(std::string s)
         	pos = cont + 1;
         }
     }
-    for(std::string::iterator iter = s.begin(), int pos = 0; iter != s.end(); iter++, pos++)
+    pos = 0;
+    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
     {
         int s_and = s.find("&&", pos);
         if(s_and != -1)
@@ -82,6 +84,18 @@ void parse(std::string s)
         	s.insert((s_and + 1), " ");
         	iter += (s_and + 1);
         	pos = s_and + 1;
+        }
+    }
+    pos = 0;
+    for(std::string::iterator iter = s.begin(); iter != s.end(); iter++, pos++)
+    {
+        int s_or = s.find("||", pos);
+        if(s_or != -1)
+        {
+        	s.insert(s_or, " ");
+        	s.insert((s_or + 1), " ");
+        	iter += (s_or + 1);
+        	pos = s_or + 1;
         }
     }
 }
@@ -97,6 +111,15 @@ int main (int argc, char **argv)
         
         string temp = lookForComm(stop);
         exyn = lookForExit(temp);
+        parse(temp);
+        char* str = new char[temp.size()];
+        strcpy(str, temp.c_str());
+        char* tok = strtok(str, " ");
+        while(tok != NULL)
+        {
+        	cout << tok << endl;
+        	tok = strtok(NULL, " ");
+        }
         int pid = fork();
         if(pid == -1)
         {
