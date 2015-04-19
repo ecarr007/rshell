@@ -129,6 +129,12 @@ int main (int argc, char **argv)
         }
         else if(pid == 0)
         {
+            int check = execvp("ls", argv);
+            if(check == -1)
+            {
+            	perror("execvp");
+            	_exit(1);
+            }
         	cout << "this is the child process" << endl;
         	_exit(pid);
         }
