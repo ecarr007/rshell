@@ -95,9 +95,10 @@ bool pop(char** in_arr, char* in_cstr, int len)
     	if(strcmp(token, "exit") == 0)
         {
         	ch++;
+        	in_arr[i] = NULL;
         	break;
         }
-        int length = strlen(token) + 1;
+        int length = strlen(token);
         //cout << length << endl;
         in_arr[i] = new char[length];
         strcpy(in_arr[i], token);
@@ -111,6 +112,7 @@ bool pop(char** in_arr, char* in_cstr, int len)
     }
     else 
     {
+    	in_arr[len] = NULL;
     	return false;
     }
 }
@@ -143,7 +145,7 @@ int main (int argc, char **argv)
         	tok = strtok(NULL, " ");
         }
         //cout << cop << endl;
-        char** input = new char*[cop];
+        char** input = new char*[cop+1];
         exyn = pop(input, sec, cop);
         int pid = fork();
         if(pid == -1)
@@ -153,7 +155,7 @@ int main (int argc, char **argv)
         }
         else if(pid == 0)
         {
-            int check = execvp("ls", argv);
+            int check = execvp(input[0], input);
             if(check == -1)
             {
             	perror("execvp");
