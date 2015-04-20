@@ -99,11 +99,8 @@ bool pop(char** in_arr, char* in_cstr, int len)
         	break;
         }
         int length = strlen(token);
-        //cout << length << endl;
         in_arr[i] = new char[length];
         strcpy(in_arr[i], token);
-        cout << in_arr[i] << endl;
-        //cout << token << endl;
         token = strtok(NULL, " ");
     }
     if(ch > 0)
@@ -121,13 +118,11 @@ int main (int argc, char **argv)
 {
 	string stop;
 	bool exyn;
-	//char** input;
 	do
 	{
         printcmd();
         getline(cin, stop);
         string temp = lookForComm(stop);
-        //exyn = lookForExit(temp);
         parse(temp);
         size_t len = temp.size();
         char* str = new char[len];
@@ -138,13 +133,9 @@ int main (int argc, char **argv)
         int cop = 0;
         while(tok != 0)
         {
-        	//cout << tok << endl;
-            //strcpy(input[cop], tok);
-            //std::cout << input[cop] << std::endl;
             cop++;
         	tok = strtok(NULL, " ");
         }
-        //cout << cop << endl;
         char** input = new char*[cop+1];
         exyn = pop(input, sec, cop);
         int pid = fork();
@@ -155,14 +146,15 @@ int main (int argc, char **argv)
         }
         else if(pid == 0)
         {
+        	cout << "this is the child process" << endl;
             int check = execvp(input[0], input);
             if(check == -1)
             {
             	perror("execvp");
             	_exit(1);
             }
-        	cout << "this is the child process" << endl;
         	_exit(pid);
+            //}
         }
         else
         {
