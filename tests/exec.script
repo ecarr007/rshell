@@ -1,0 +1,65 @@
+Script started on Sun 19 Apr 2015 11:54:36 PM PDT
+~
+ecarr007@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mecarr007[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd rshell
+[s%%%%%%%%%%[u[0;32mecarr007[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (exec) [0;36m$[0m make
+mkdir -p bin
+g++ -Wall -Werror -ansi -pedantic ./src/rshell.cpp -o bin/rshell
+[s%%%%%%%%%%[u[0;32mecarr007[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (exec) [0;36m$[0m bin [K/rshell
+ecarr007@hammer.cs.ucr.edu:~$ ./  bin/rshell#ca    #can be run inside of itself
+ecarr007@hammer.cs.ucr.edu:~$ ps
+  PID TTY          TIME CMD
+14192 pts/10   00:00:00 bash
+14244 pts/10   00:00:00 rshell
+14325 pts/10   00:00:00 rshell
+14352 pts/10   00:00:00 ps
+ecarr007@hammer.cs.ucr.edu:~$ ls -a#testing comments
+.   bin   LICENSE   .Makefile.swp  .README.md.swp  tests
+..  .git  Makefile  README.md	   src
+ecarr007@hammer.cs.ucr.edu:~$ pwd
+/home/csmajs/ecarr007/rshell
+ecarr007@hammer.cs.ucr.edu:~$ exit#going back to prev rshell
+ecarr007@hammer.cs.ucr.edu:~$ ps
+  PID TTY          TIME CMD
+14192 pts/10   00:00:00 bash
+14244 pts/10   00:00:00 rshell
+15558 pts/10   00:00:00 ps
+ecarr007@hammer.cs.ucr.edu:~$ ls -      -a#testing spaces
+.   bin   LICENSE   .Makefile.swp  .README.md.swp  tests
+..  .git  Makefile  README.md	   src
+ecarr007@hammer.cs.ucr.edu:~$ test#no error ouput     tu put,  with t "test" thi    , bug
+ecarr007@hammer.cs.ucr.edu:~$ asdsw
+execvp: No such file or directory
+ecarr007@hammer.cs.ucr.edu:~$ #there is ero ror output here though
+ecarr007@hammer.cs.ucr.edu:~$ #cann  out    t run multiple commands, do    
+ecarr007@hammer.cs.ucr.edu:~$ #does not hande le connectors
+ecarr007@hammer.cs.ucr.edu:~$ pwd ; ls -a
+pwd: invalid option -- 'a'
+Try `pwd --help' for more information.
+ecarr007@hammer.cs.ucr.edu:~$ exit
+[s%%%%%%%%%%[u[0;32mecarr007[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (exec) [0;36m$[0m exit
+exit
+~
+ecarr007@hammer $ exit
+exit
+
+Script done on Sun 19 Apr 2015 11:59:42 PM PDT
