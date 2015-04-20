@@ -114,6 +114,20 @@ bool pop(char** in_arr, char* in_cstr, int len)
     }
 }
 
+std::vector<int> pop_split(char** in)
+{
+	std::vector<int> ret;
+	ret.push_back(0);
+	for(int i = 0; in[i] != 0; i++)
+    {
+    	if(strcmp(in[i], ";") == 0 || strcmp(in[i], "||") == 0 || strcmp(in[i], "&&") == 0)
+        {
+        	ret.push_back(i);
+        }
+    }
+    return ret;
+}
+
 int main (int argc, char **argv)
 {
 	string stop;
@@ -138,6 +152,7 @@ int main (int argc, char **argv)
         }
         char** input = new char*[cop+1];
         exyn = pop(input, sec, cop);
+        std::vector<int> d_pos = pop_split(input);
         int pid = fork();
         if(pid == -1)
         {
@@ -147,6 +162,9 @@ int main (int argc, char **argv)
         else if(pid == 0)
         {
         	cout << "this is the child process" << endl;
+        	if(d_pos.size() > 1)
+            {
+            }	
             int check = execvp(input[0], input);
             if(check == -1)
             {
