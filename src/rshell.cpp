@@ -33,7 +33,7 @@ std::string lookForComm(string s)
 {
    std::string comm = "#";
    std::string token;
-   int pos = 0;
+   size_t pos = 0;
    if((pos = s.find(comm)) != std::string::npos)
    {
         token = s.substr(0, pos);
@@ -161,18 +161,13 @@ int main (int argc, char **argv)
         }
         else if(pid == 0)
         {
-        	cout << "this is the child process" << endl;
-        	if(d_pos.size() > 1)
-            {
-            }	
             int check = execvp(input[0], input);
             if(check == -1)
             {
-            	perror("execvp");
+                perror("execvp");
             	_exit(1);
             }
         	_exit(pid);
-            //}
         }
         else
         {
