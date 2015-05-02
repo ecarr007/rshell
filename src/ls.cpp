@@ -38,7 +38,39 @@ bool str_check(string j, string k)
     return ret;
 }
 
-int main()
+void dir_check(vector<string> &inf, char* argv[], string passed)
+{
+    DIR *d;
+
+    if((d = opendir(".")) == NULL)
+    {
+    	perror("opendir");
+    	exit(1);
+    }
+    struct dirent *st;
+    errno = 0;
+    while((st = readdir(d)) != NULL)
+    {
+    	if(errno != 0)
+        {
+        	perror("readdir");
+        	exit(1);
+        }
+        else
+        {
+    	    inf.push_back(st->d_name);
+        }
+    }
+    if(closedir(d) == -1)
+    {
+    	perror("closedir");
+    	exit(1);
+    }
+    sort(inf.begin(), inf.end(), str_check);
+    return;
+}
+
+int main(int argc, char *argv[])
 {
     vector<string> vec;
     vec.push_back("action");
@@ -55,3 +87,4 @@ int main()
     }
 	return 0;
 }
+
