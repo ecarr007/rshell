@@ -88,10 +88,15 @@ void noP(char *argv[])
             {
         	    cout << inf[i] << "   ";
         	    sz -= (inf.at(i).size()+3);
+        	    if(sz <= 0)
+                {
+                	cout << endl;
+                }
             }
         }
         else
         {
+        	cout << endl;
         	sz = 80;
             if(inf[i][0] != '.')
             {
@@ -100,6 +105,7 @@ void noP(char *argv[])
             }
         }
     }
+    cout << endl;
     return;
 }
 
