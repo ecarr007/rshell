@@ -85,7 +85,7 @@ void noP(char *argv[])
         }
         if(inf[i][0] != '.')
         {
-            cout << std::left << setw(24) << inf[i];
+            cout << std::left << setw(24) << inf.at(i);
             --count;
         }
     }
@@ -95,25 +95,65 @@ void noP(char *argv[])
 
 void aP(char *argv[])
 {
+    string p = "a";
+    vector<string> inf;
+    dir_check(inf, argv, p);
+    int count = 3;
+    for(size_t i = 0; i < inf.size(); i++)
+    {
+    	if(count == 0)
+        {
+        	cout << '\n';
+        	count = 3;
+        }
+        cout << std::left << setw(24) << inf.at(i);
+        --count;
+    }
+    cout << endl;
     return;
 }
 
 int main(int argc, char *argv[])
 {
-   /* vector<string> vec;
-    vec.push_back("action");
-    vec.push_back("let");
-    vec.push_back("act");
-    vec.push_back("Active");
-    vec.push_back("test");
-    vec.push_back("eddy");
-    vec.push_back("bed");
-    sort(vec.begin(), vec.end(), str_check);
-    for(int i = 0; i < vec.size(); i++)
+    //noP(argv);
+    //aP(argv);
+    bool aPassed = false;
+    bool check = true;
+    for(int i = 1; i < argc; i++)
     {
-    	cout << vec.at(i) << endl;
-    }*/
-    noP(argv);
+        string st;
+        st = argv[i];
+        if(st.find("-") == 0)
+        {
+        	if((st.find("a")) == 0)
+            {
+            	aPassed = true;
+            }
+            for(size_t b = 1; b < st.size(); b++)
+            {
+            	if((st.at(b)) == 'a')
+                {
+                	aPassed = true;
+                }
+                else
+                {
+                	check = false;
+                }
+            }
+        }
+    }
+    if(!check)
+    {
+    	return 1;
+    }
+    if(!aPassed)
+    {
+        noP(argv);
+    }
+    else if(aPassed)
+    {
+      	aP(argv);
+    }
 	return 0;
 }
 
