@@ -1,0 +1,104 @@
+Script started on Sat 02 May 2015 12:07:23 AM PDT
+~
+ecarr007@hammer $ cd rshell
+~/rshell
+ecarr007@hammer $ mak[K[K[Kls
+[0m[01;34mbin[0m/  LICENSE  Makefile  README.md  [01;34msrc[0m/  [01;34mtests[0m/
+[m~/rshell
+ecarr007@hammer $ make clean
+rm -rf ./bin
+~/rshell
+ecarr007@hammer $ make
+mkdir -p bin
+g++ -Wall -Werror -ansi -pedantic ./src/rshell.cpp -o bin/rshell
+g++ -Wall -Werror -ansi -pedantic ./src/ls.cpp -o bin/ls
+~/rshell
+ecarr007@hammer $ #program can only handle ls and ls -a
+~/rshell
+ecarr007@hammer $ bin/ls 
+bin                     LICENSE                 Makefile                
+README.md               src                     tests                   
+~/rshell
+ecarr007@hammer $ #has alphabetical order from left to right
+~/rshell
+ecarr007@hammer $ bin/ls -a
+.                       ..                      .git                    
+.README.md.swp          bin                     LICENSE                 
+Makefile                README.md               src                     
+tests                   
+~/rshell
+ecarr007@hammer $ bin/ls -22 #does nothing with bad rgu[K[K[Karguments
+~/rshell
+ecarr007@hammer $ cd ..
+~
+ecarr007@hammer $ rshell/bn[Kin/ls
+_CACHE_CLEAN_           addons.sqlite           blocklist.xml           
+bookmarkbackups         Cache                   cert8.db                
+chromeappsstore.sqlite  compatibility.ini       content-prefs.sqlite    
+cookies.sqlite          cookies.sqlite-shm      cs100Work               
+Desktop                 Documents               Downloads               
+downloads.sqlite        extensions.ini          extensions.sqlite       
+formhistory.sqlite      indexedDB               key3.db                 
+localstore.rdf          marionette.log          mimeTypes.rdf           
+mozilla-media-cache     Music                   permissions.sqlite      
+Pictures                places.sqlite           places.sqlite-shm       
+pluginreg.dat           prefs.js                Public                  
+rshell                  rshell-1                safebrowsing            
+search.json             secmod.db               SECOND                  
+sessionstore.bak        sessionstore.js         signons.sqlite          
+startupCache            Templates               TEST                    
+thumbnails              tutor                   urlclassifierkey3.txt   
+Videos                  webapps                 webappsstore.sqlite     
+webappsstore.sqlite-shm 
+~
+ecarr007@hammer $ rshell/bin/ls -a
+.                       ..                      .adobe                  
+.bash_history           .bash_logout            .bashrc                 
+.cache                  .config                 .dbus                   
+.dmrc                   .eggcups                .esd_auth               
+.fontconfig             .gconf                  .gconfd                 
+.gitconfig              .gitlearn               .gnome                  
+.gnome2                 .gnome2_private         .gnote                  
+.gnupg                  .gstreamer-0.10         .gtk-bookmarks          
+.gtkrc-1.2-gnome2       .gvfs                   .ICEauthority           
+.imsettings.log         .kde                    .local                  
+.macromedia             .metacity               .mozilla                
+.nautilus               .nv                     .parentlock             
+.pki                    .procmailrc             .profile                
+.pulse                  .pulse-cookie           .recently-used.xbel     
+.redhat                 .ssh                    .thumbnails             
+.Trash                  .vim                    .viminfo                
+.vimrc                  .Xauthority             .xsession-errors.old    
+_CACHE_CLEAN_           addons.sqlite           blocklist.xml           
+bookmarkbackups         Cache                   cert8.db                
+chromeappsstore.sqlite  compatibility.ini       content-prefs.sqlite    
+cookies.sqlite          cookies.sqlite-shm      cs100Work               
+Desktop                 Documents               Downloads               
+downloads.sqlite        extensions.ini          extensions.sqlite       
+formhistory.sqlite      indexedDB               key3.db                 
+localstore.rdf          marionette.log          mimeTypes.rdf           
+mozilla-media-cache     Music                   permissions.sqlite      
+Pictures                places.sqlite           places.sqlite-shm       
+pluginreg.dat           prefs.js                Public                  
+rshell                  rshell-1                safebrowsing            
+search.json             secmod.db               SECOND                  
+sessionstore.bak        sessionstore.js         signons.sqlite          
+startupCache            Templates               TEST                    
+thumbnails              tutor                   urlclassifierkey3.txt   
+Videos                  webapps                 webappsstore.sqlite     
+webappsstore.sqlite-shm 
+~
+ecarr007@hammer $ cd rshell/src
+~/rshell/src
+ecarr007@hammer $ ../bin/ls
+a.out                   ls.cpp                  rshell.cpp              
+~/rshell/src
+ecarr007@hammer $ ../bin/ls -a
+.                       ..                      .git                    
+.ls.cpp.swn             .ls.cpp.swo             a.out                   
+ls.cpp                  rshell.cpp              
+~/rshell/src
+ecarr007@hammer $ exit
+exit
+
+Script done on Sat 02 May 2015 12:10:21 AM PDT

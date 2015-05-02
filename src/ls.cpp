@@ -21,7 +21,7 @@
 #include <ctype.h>
 
 using namespace std;
-
+//help for sorting
 bool check(char one, char two)
 {
 	bool ret = false;
@@ -31,13 +31,13 @@ bool check(char one, char two)
     }
     return ret;
 }
-
+//help for sorting
 bool str_check(string j, string k)
 {
     bool ret = lexicographical_compare(j.c_str(), j.c_str()+j.size(), k.c_str(), k.c_str()+k.size(), check);
     return ret;
 }
-
+//opens directory and sorts
 void dir_check(vector<string> &inf, char* argv[], string passed)
 {
     DIR *d;
@@ -69,7 +69,7 @@ void dir_check(vector<string> &inf, char* argv[], string passed)
     sort(inf.begin(), inf.end(), str_check);
     return;
 }
-
+//no arguments passed in, just ls
 void noP(char *argv[])
 {
 	string p = "ls";
@@ -92,7 +92,7 @@ void noP(char *argv[])
     cout << endl;
     return;
 }
-
+//-a passed in
 void aP(char *argv[])
 {
     string p = "a";
