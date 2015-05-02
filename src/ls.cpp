@@ -75,37 +75,26 @@ void noP(char *argv[])
 	string p = "ls";
 	vector<string> inf;
 	dir_check(inf, argv, p);
-	int sz = 80;
+	int count = 3;
 	for(size_t i = 0; i < inf.size(); i++)
     {
-    	if(sz <= 0)
+        if(count == 0)
         {
-        	sz = 80;
+            cout << '\n';
+            count = 3;
         }
-    	if(inf.at(i).size()+3 <= sz)
-    	{
-    	    if(inf[i][0] != '.')
-            {
-        	    cout << inf[i] << "   ";
-        	    sz -= (inf.at(i).size()+3);
-        	    if(sz <= 0)
-                {
-                	cout << endl;
-                }
-            }
-        }
-        else
+        if(inf[i][0] != '.')
         {
-        	cout << endl;
-        	sz = 80;
-            if(inf[i][0] != '.')
-            {
-        	    cout << inf[i] << "   ";
-        	    sz -= (inf.at(i).size()+3);
-            }
+            cout << std::left << setw(24) << inf[i];
+            --count;
         }
     }
     cout << endl;
+    return;
+}
+
+void aP(char *argv[])
+{
     return;
 }
 
