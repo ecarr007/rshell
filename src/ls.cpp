@@ -70,9 +70,42 @@ void dir_check(vector<string> &inf, char* argv[], string passed)
     return;
 }
 
+void noP(char *argv[])
+{
+	string p = "ls";
+	vector<string> inf;
+	dir_check(inf, argv, p);
+	int sz = 80;
+	for(size_t i = 0; i < inf.size(); i++)
+    {
+    	if(sz <= 0)
+        {
+        	sz = 80;
+        }
+    	if(inf.at(i).size()+3 <= sz)
+    	{
+    	    if(inf[i][0] != '.')
+            {
+        	    cout << inf[i] << "   ";
+        	    sz -= (inf.at(i).size()+3);
+            }
+        }
+        else
+        {
+        	sz = 80;
+            if(inf[i][0] != '.')
+            {
+        	    cout << inf[i] << "   ";
+        	    sz -= (inf.at(i).size()+3);
+            }
+        }
+    }
+    return;
+}
+
 int main(int argc, char *argv[])
 {
-    vector<string> vec;
+   /* vector<string> vec;
     vec.push_back("action");
     vec.push_back("let");
     vec.push_back("act");
@@ -84,7 +117,8 @@ int main(int argc, char *argv[])
     for(int i = 0; i < vec.size(); i++)
     {
     	cout << vec.at(i) << endl;
-    }
+    }*/
+    noP(argv);
 	return 0;
 }
 
