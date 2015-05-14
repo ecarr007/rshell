@@ -114,19 +114,41 @@ bool pop(char** in_arr, char* in_cstr, int len)
     }
 }
 
-std::vector<int> pop_split(char** in)
+std::vector<int> pos_split(char** in)
 {
 	std::vector<int> ret;
 	ret.push_back(0);
-	for(int i = 0; in[i] != 0; i++)
+	string col = ";";
+	string chor = "||";
+	string chand = "&&";
+	for(int i = 0; in[i] != NULL; i++)
     {
-    	if(strcmp(in[i], ";") == 0 || strcmp(in[i], "||") == 0 || strcmp(in[i], "&&") == 0)
+    	//cout << in[i] << endl;
+    	if(strcmp(in[i], col.c_str()) == 0 || strcmp(in[i], chor.c_str()) == 0 || strcmp(in[i], chand.c_str()) == 0)
+        {
+        	//cout << "found!" << endl;
+        	ret.push_back(i);
+        	//cout << ret.at(0) << endl;
+        	//cout << i << endl;
+        }
+        else if(in[i+1] == NULL)
         {
         	ret.push_back(i);
         }
     }
     return ret;
 }
+
+/*char** single_split(char** in, int pos)
+{
+    char** ret = new char*[pos];
+    int check = 0;
+    while(check <= pos)
+    {
+    	ret[check] = in[check];
+    }
+    return ret;
+}*/
 
 int main (int argc, char **argv)
 {
@@ -152,31 +174,53 @@ int main (int argc, char **argv)
         }
         char** input = new char*[cop+1];
         exyn = pop(input, sec, cop);
-        std::vector<int> d_pos = pop_split(input);
-        int pid = fork();
-        if(pid == -1)
+        //cout << input[0] << endl;
+        std::vector<int> d_pos = pos_split(input);
+        //cout << d_pos.at(0) << endl;
+        int sup = 0;
+        for(size_t a = 1; a < d_pos.size()+1; a++)
         {
-        	perror("fork");
-        	_exit(1);
-        }
-        else if(pid == 0)
-        {
-            int check = execvp(input[0], input);
-            if(check == -1)
+            char** single = new char*[d_pos.at(a)-d_pos.at(a-1)];
+            int pos = 0;
+            //int sup = 1;
+            while(pos < (d_pos.at(a)-d_pos.at(a-1)))
             {
-                perror("execvp");
-            	_exit(1);
+            	single[pos] = new char[strlen(input[sup+pos])];
+    	        strcpy(single[pos], input[sup+pos]);
+                pos += 1;
             }
-        	_exit(pid);
-        }
-        else
-        {
-        	int status = wait(NULL);
-        	if(status == -1)
+            sup += pos;
+            sup++;
+            int pid = fork();
+            if(pid == -1)
             {
-            	perror("wait");
-            	_exit(1);
+        	    perror("fork");
+        	    _exit(1);
             }
+            else if(pid == 0)
+            {
+                int check = execvp(single[0], single);
+                if(check == -1)
+                {
+                    perror("execvp");
+            	    _exit(1);
+                }
+        	    _exit(pid);
+            }
+            else
+            {
+        	    int status = wait(NULL);
+        	    if(status == -1)
+                {
+            	    perror("wait");
+            	    _exit(1);
+                }
+            }
+            for(int i = 0; i < pos; i++)
+            {
+            	delete[] single[i];
+            }
+            delete[] single;
         }
     }while(!exyn);
 
