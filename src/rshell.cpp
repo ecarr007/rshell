@@ -117,23 +117,55 @@ bool pop(char** in_arr, char* in_cstr, int len)
 std::vector<int> pos_split(char** in)
 {
 	std::vector<int> ret;
-	ret.push_back(0);
+	//ret.push_back(0);
+	int ch = 0;
+	int mat = -1;
 	string col = ";";
 	string chor = "||";
 	string chand = "&&";
 	for(int i = 0; in[i] != NULL; i++)
     {
     	//cout << in[i] << endl;
-    	if(strcmp(in[i], col.c_str()) == 0 || strcmp(in[i], chor.c_str()) == 0 || strcmp(in[i], chand.c_str()) == 0)
+
+    	if(strcmp(in[i], col.c_str()) != 0 && strcmp(in[i], chor.c_str()) != 0 && strcmp(in[i], chand.c_str()) != 0)
+        {
+        	ch++;
+        }
+    	else if(strcmp(in[i], col.c_str()) == 0 || strcmp(in[i], chor.c_str()) == 0 || strcmp(in[i], chand.c_str()) == 0)
         {
         	//cout << "found!" << endl;
-        	ret.push_back(i);
+        	/*if(ch >= 1)
+            {
+            	ret.push_back(i-1);
+            	ch++;
+            }*/
+            //else{
+               /* if(mat == -1)
+                {
+                    ret.push_back(i-ch);
+                    ch=i;
+                    mat = 0;
+                }
+                else{
+                    mat = i - ch;
+                    ret.push_back(i-mat);
+        	        ch = i;
+                }
+            //}
         	//cout << ret.at(0) << endl;
-        	//cout << i << endl;
+        	//cout << i << endl;*/
+            ret.push_back(ch);
+            ch=0;
         }
-        else if(in[i+1] == NULL)
+        if(in[i+1] == NULL)
         {
-        	ret.push_back(i);
+        	/*if(ch > 1)
+            {
+            	ret.push_back(i-1);
+            }*/
+            //else{
+        	    ret.push_back(ch);
+            //}
         }
     }
     return ret;
@@ -173,21 +205,47 @@ int main (int argc, char **argv)
         	tok = strtok(NULL, " ");
         }
         char** input = new char*[cop+1];
+        //input[cop+1] = NULL;
         exyn = pop(input, sec, cop);
         //cout << input[0] << endl;
         std::vector<int> d_pos = pos_split(input);
         //cout << d_pos.at(0) << endl;
         int sup = 0;
-        for(size_t a = 1; a < d_pos.size()+1; a++)
+        for(size_t a = 0; a < d_pos.size(); a++)
         {
-            char** single = new char*[d_pos.at(a)-d_pos.at(a-1)];
+            char** single = new char*[d_pos.at(a)];
             int pos = 0;
             //int sup = 1;
-            while(pos < (d_pos.at(a)-d_pos.at(a-1)))
+            if((d_pos.at(a) == 1||d_pos.at(a) == 0)&&cop < 2)
             {
-            	single[pos] = new char[strlen(input[sup+pos])];
-    	        strcpy(single[pos], input[sup+pos]);
-                pos += 1;
+            	while(pos < cop)
+                {    
+            	    single[pos] = new char[strlen(input[sup+pos])];
+    	            strcpy(single[pos], input[sup+pos]);
+                    pos += 1;
+                }
+                single[pos] = NULL;
+            }
+            else
+            {
+            	if(cop == 2)
+                {        		
+                    while(pos < 2)
+                    {
+            	        single[pos] = new char[strlen(input[sup+pos])];
+    	                strcpy(single[pos], input[sup+pos]);
+                        pos += 1;
+                    }
+                }
+                else{
+                    while(pos < (d_pos.at(a)))
+                    {
+            	        single[pos] = new char[strlen(input[sup+pos])];
+    	                strcpy(single[pos], input[sup+pos]);
+                        pos += 1;
+                    }
+                }
+                single[pos] = NULL;
             }
             sup += pos;
             sup++;
@@ -216,10 +274,10 @@ int main (int argc, char **argv)
             	    _exit(1);
                 }
             }
-            for(int i = 0; i < pos; i++)
+            /*for(int i = 0; i < pos; i++)
             {
             	delete[] single[i];
-            }
+            }*/
             delete[] single;
         }
     }while(!exyn);
