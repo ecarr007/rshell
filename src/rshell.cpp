@@ -117,60 +117,53 @@ bool pop(char** in_arr, char* in_cstr, int len)
 std::vector<int> pos_split(char** in)
 {
 	std::vector<int> ret;
-	//ret.push_back(0);
 	int ch = 0;
-	int mat = -1;
 	string col = ";";
 	string chor = "||";
 	string chand = "&&";
 	for(int i = 0; in[i] != NULL; i++)
     {
-    	//cout << in[i] << endl;
-
     	if(strcmp(in[i], col.c_str()) != 0 && strcmp(in[i], chor.c_str()) != 0 && strcmp(in[i], chand.c_str()) != 0)
         {
         	ch++;
         }
     	else if(strcmp(in[i], col.c_str()) == 0 || strcmp(in[i], chor.c_str()) == 0 || strcmp(in[i], chand.c_str()) == 0)
         {
-        	//cout << "found!" << endl;
-        	/*if(ch >= 1)
-            {
-            	ret.push_back(i-1);
-            	ch++;
-            }*/
-            //else{
-               /* if(mat == -1)
-                {
-                    ret.push_back(i-ch);
-                    ch=i;
-                    mat = 0;
-                }
-                else{
-                    mat = i - ch;
-                    ret.push_back(i-mat);
-        	        ch = i;
-                }
-            //}
-        	//cout << ret.at(0) << endl;
-        	//cout << i << endl;*/
             ret.push_back(ch);
             ch=0;
         }
         if(in[i+1] == NULL)
         {
-        	/*if(ch > 1)
-            {
-            	ret.push_back(i-1);
-            }*/
-            //else{
         	    ret.push_back(ch);
-            //}
         }
     }
     return ret;
 }
 
+std::vector<string> pos_split_type(char** in)
+{
+	std::vector<string> ret;
+	int ch = 0;
+	string col = ";";
+	string chor = "||";
+	string chand = "&&";
+	for(int i = 0; in[i] != NULL; i++)
+    {
+    	if(strcmp(in[i], col.c_str()) == 0)
+        {
+        	ret.push_back(col);
+        }
+    	else if(strcmp(in[i], chor.c_str()) == 0)
+        {
+        	ret.push_back(chor);
+        }
+    	else if(strcmp(in[i], chand.c_str()) == 0)
+        {
+        	ret.push_back(chand);
+        }
+    }
+    return ret;
+}
 /*char** single_split(char** in, int pos)
 {
     char** ret = new char*[pos];
