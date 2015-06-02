@@ -8,8 +8,10 @@
 #include <string.h>
 #include <cstring>
 #include <sys/param.h>
+#include <sys/mman.h>
 
 using namespace std;
+
 void printcmd()
 {
 		char *usrnm;
@@ -174,13 +176,19 @@ std::vector<string> pos_split_type(char** in)
     }
     return ret;
 }*/
+//void execComm(char **in, bool w)
+//{
+//}
 
 int main (int argc, char **argv)
 {
 	string stop;
 	bool exyn;
+    int *worksQ;
 	do
 	{
+        worksQ = (int*)mmap(NULL, sizeof *worksQ, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+        *worksQ = 1;
         printcmd();
         getline(cin, stop);
         string temp = lookForComm(stop);
@@ -202,10 +210,13 @@ int main (int argc, char **argv)
         exyn = pop(input, sec, cop);
         //cout << input[0] << endl;
         std::vector<int> d_pos = pos_split(input);
+        std::vector<string> d_typ = pos_split_type(input);
         //cout << d_pos.at(0) << endl;
         int sup = 0;
+        int b = 0;
         for(size_t a = 0; a < d_pos.size(); a++)
         {
+            cout << *worksQ << endl;
             char** single = new char*[d_pos.at(a)];
             int pos = 0;
             //int sup = 1;
@@ -250,11 +261,60 @@ int main (int argc, char **argv)
             }
             else if(pid == 0)
             {
-                int check = execvp(single[0], single);
-                if(check == -1)
+                if(a == 0 || a > d_typ.size())
                 {
-                    perror("execvp");
-            	    _exit(1);
+                    int check = execvp(single[0], single);
+                	if(check == -1)
+                    {
+                        *worksQ = 2;
+                    	perror("execvp");
+                    	_exit(1);
+                    }
+                    else{
+                    	*worksQ = 1;
+                    }
+                }
+            	else if(d_typ.at(a-1) == ";")
+                {
+                	//execComm(single, worksQ);
+                    int check = execvp(single[0], single);
+                    if(check == -1)
+                    {
+                    	*worksQ = 2;
+                        perror("execvp");
+                        _exit(1);
+                    }
+                    else{
+                    	*worksQ = 1;
+                    }
+                }
+                else if(d_typ.at(a-1) == "||" && *worksQ > 1)
+                {
+                	//execComm(single, worksQ);
+                    int check = execvp(single[0], single);
+                    if(check == -1)
+                    {
+                    	*worksQ = 2;
+                        perror("execvp");
+                        _exit(1);
+                    }
+                    else{
+                    	*worksQ = 1;
+                    }
+                }
+                else if(d_typ.at(a-1) == "&&" && *worksQ == 1)
+                {
+                	//execComm(single, worksQ);
+                    int check = execvp(single[0], single);
+                    if(check == -1)
+                    {
+                        *worksQ = 2;
+                        perror("execvp");
+                        _exit(1);
+                    }
+                    else{
+                    	*worksQ = 1;
+                    }
                 }
         	    _exit(pid);
             }
@@ -267,12 +327,14 @@ int main (int argc, char **argv)
             	    _exit(1);
                 }
             }
+
             /*for(int i = 0; i < pos; i++)
             {
             	delete[] single[i];
             }*/
             delete[] single;
         }
+        munmap(worksQ, sizeof *worksQ);
     }while(!exyn);
 
 	return 0;
